@@ -19,7 +19,7 @@ SMTP_PORT = 587
 
 
 
-def get_stock_price(ticker, retries=3, delay=2):
+def get_stock_price(ticker, retries=4, delay=1):
     for attempt in range(retries):
         stock = yf.Ticker(ticker)
         data = stock.history(period='1d')
