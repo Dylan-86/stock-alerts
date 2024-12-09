@@ -19,12 +19,16 @@ SMTP_PORT = 587
 
 
 
-# Function to fetch current stock price
-def get_stock_price(ticker):
-    stock = yf.Ticker(ticker)
-    data = stock.history(period='1d')
-    current_price = data['Close'].iloc[-1]
-    return current_price
+def get_stock_price(ticker, retries=3, delay=2):
+    for attempt in range(retries):
+        stock = yf.Ticker(ticker)
+        data = stock.history(period='1d')
+        if not data.empty:
+            return data['Close'].iloc[-1]
+        print(f"Attempt {attempt + 1} failed for {ticker}. Retrying...")
+        time.sleep(delay)
+    print(f"{ticker}: No data found after {retries} attempts.")
+    return None
 
 # Function to send email
 def send_email(subject, body):
