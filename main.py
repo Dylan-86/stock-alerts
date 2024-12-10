@@ -8,7 +8,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import pytz
 from datetime import datetime
-import sort
+import sort-alphabetical
 #%%
 # Sort the CSV alphabetically - Specify the input and output CSV files and the column to sort
 input_file = 'stocks.csv'
