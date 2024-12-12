@@ -113,4 +113,4 @@ Contributions, issues, and feature requests are welcome! Feel free to open a pul
 
 This script is for educational purposes only. It does not constitute financial advice or guarantee accuracy of stock price data.
 
-Last update 12/12/2024
+Last update 12/12/2024.
