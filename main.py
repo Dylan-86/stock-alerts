@@ -27,7 +27,6 @@ SMTP_SERVER = 'pro.turbo-smtp.com'
 SMTP_PORT = 587
 
 
-
 def get_stock_price(ticker, retries=4, delay=1):
     for attempt in range(retries):
         stock = yf.Ticker(ticker)
@@ -38,6 +37,16 @@ def get_stock_price(ticker, retries=4, delay=1):
         time.sleep(delay)
     print(f"{ticker}: No data found after {retries} attempts.")
     return None
+
+# Function to get P/E ratio
+def get_pe_ratio(ticker):
+    stock = yf.Ticker(ticker)
+    try:
+        pe_ratio = stock.info.get('trailingPE', None)
+        return pe_ratio if pe_ratio else "N/A"
+    except Exception as e:
+        print(f"Error retrieving P/E ratio for {ticker}: {e}")
+        return "N/A"
 
 # Function to send email
 def send_email(subject, body):
@@ -106,16 +115,17 @@ def check_stocks(stocks_to_monitor):
         ticker = stock['ticker']
         low = stock['low']
         high = stock['high']
+        current_price = round(get_stock_price(ticker), 2)
+        pe_ratio = round(get_pe_ratio(ticker), 2) if get_pe_ratio(ticker) != "N/A" else "N/A"
 
-        current_price = get_stock_price(ticker)
-        print(f"Current price of {ticker}: {current_price}")
+        print(f"Current price of {ticker}: {current_price}, P/E Ratio: {pe_ratio}")
 
         if current_price < low:
-            alert = f"Alert: {ticker} price below {low}. Current price: {current_price}"
+            alert = f"😑 - {ticker} price below {low}. Current price: {current_price}. P/E Ratio: {pe_ratio}"
             print(alert)
             alerts.append(alert)
         elif current_price > high:
-            alert = f"Alert: {ticker} price above {high}. Current price: {current_price}"
+            alert = f"✅ - {ticker} price above {high}. Current price: {current_price}. P/E Ratio: {pe_ratio}"
             print(alert)
             alerts.append(alert)
         else:
