@@ -1,27 +1,18 @@
 ## Setup
 
 1.  **Clone this repository**:
+
+    ` git clone https://github.com/your-username/stock-price-alert.git` 
     
-    bash
-    
-    Copia codice
-    
-    `git clone https://github.com/your-username/stock-price-alert.git
-    cd stock-price-alert` 
+    ` cd stock-price-alert` 
     
 2.  **Install dependencies with Poetry**: Run the following command to install all required dependencies in a virtual environment:
     
-    bash
-    
-    Copia codice
-    
+
     `poetry install` 
     
 3.  **Create a `.env` file**: Add your email configuration and other sensitive data in a `.env` file in the root directory. Example:
     
-    plaintext
-    
-    Copia codice
     
     `EMAIL_ADDRESS=your-email@example.com
     EMAIL_PASSWORD=your-email-password
@@ -29,28 +20,24 @@
     SMTP_SERVER=smtp.your-email-provider.com
     SMTP_PORT=587` 
     
+    
 4.  **Prepare the `stocks.csv` file**: Create a `stocks.csv` file in the following format:
     
-    csv
-    
-    Copia codice
     
     `stock,SL,TP1
     AAPL,140,160
     MSFT,250,280
     GOOGL,2700,3000` 
     
-    -   **stock**: Stock ticker symbol (e.g., AAPL for Apple, MSFT for Microsoft).
-    -   **SL**: Support level (price below which you want to get alerted).
-    -   **TP1**: Target price (price above which you want to get alerted).
+
+-   **stock**: Stock ticker symbol (e.g., AAPL for Apple, MSFT for Microsoft).
+-   **SL**: Support level (price below which you want to get alerted).
+-   **TP1**: Target price (price above which you want to get alerted).
 
 ## Usage
 
 1.  **Run the script manually**: Use Poetry to run the script within the virtual environment:
     
-    bash
-    
-    Copia codice
     
     `poetry run python stock_alert.py` 
     
@@ -71,24 +58,19 @@
 
 ### Console Log
 
-plaintext
 
-Copia codice
-
-`Current price of AAPL: 150.0
-AAPL is within the range 140-160.
-Current price of MSFT: 240.0
-Alert: MSFT price below 250. Current price: 240.0` 
+    Current price of AAPL: 150.0
+    AAPL is within the range 140-160.
+    Current price of MSFT: 240.0
+    Alert: MSFT price below 250. Current price: 240.0
 
 ### Email
 
-makefile
 
-Copia codice
 
-`Subject: Stock Price Alerts
-
-Alert: MSFT price below 250. Current price: 240.0` 
+    `Subject: Stock Price Alerts
+    
+    Alert: MSFT price below 250. Current price: 240.0` 
 
 ## Customization
 
@@ -99,7 +81,7 @@ Alert: MSFT price below 250. Current price: 240.0`
 ## Security
 
 -   **Avoid Hardcoding Credentials**: Use environment variables or a `.env` file for sensitive data.
--   **SMTP Configuration**: Use secure SMTP servers and enable two-factor authentication (if supported).
+-   **SMTP Configuration**: Use secure SMTP servers,
 
 ## License
 
