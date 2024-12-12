@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "stock-alerts"
+version = "1.0"
+description = "A Python script to monitor stock prices in real time, comparing them with defined threshold values (maximum and minimum level). If a stock exceeds the set limits, the script sends an automatic notification email, including the current price and P/E ratio."
+authors = ["dylan-86 <dylan-86>"]
+license = "Open"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pandas = "^2.2.3"
+schedule = "^1.2.2"
+yfinance = "^0.2.50"
+pytz = "^2024.2"
+python-dotenv = "^1.0.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

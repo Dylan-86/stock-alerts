@@ -9,6 +9,11 @@ from email.mime.multipart import MIMEMultipart
 import pytz
 from datetime import datetime
 import sortalphabetical
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # load .env
+
 #%%
 # Sort the CSV alphabetically - Specify the input and output CSV files and the column to sort
 input_file = 'stocks.csv'
@@ -19,12 +24,12 @@ sort_column = 'stock'
 sortalphabetical.sort_csv(input_file, output_file, sort_column)
 
 #%%
-# Email setup (replace with your own email details)
-EMAIL_ADDRESS = 'daniele@worldluxuryhome.com'
-EMAIL_PASSWORD = 'BlackWhite9900!'
-TO_EMAIL = 'danielesala1986@gmail.com'
-SMTP_SERVER = 'pro.turbo-smtp.com'
-SMTP_PORT = 587
+# Load variables
+EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')
+EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
+TO_EMAIL = os.getenv('TO_EMAIL')
+SMTP_SERVER = os.getenv('SMTP_SERVER')
+SMTP_PORT = int(os.getenv('SMTP_PORT', 587))  # Default 587 
 
 
 def get_stock_price(ticker, retries=4, delay=1):
