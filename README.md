@@ -14,20 +14,20 @@
 3.  **Create a `.env` file**: Add your email configuration and other sensitive data in a `.env` file in the root directory. Example:
     
     
-    `EMAIL_ADDRESS=your-email@example.com
-    EMAIL_PASSWORD=your-email-password
-    TO_EMAIL=recipient-email@example.com
-    SMTP_SERVER=smtp.your-email-provider.com
-    SMTP_PORT=587` 
+    `EMAIL_ADDRESS=your-email@example.com`
+    `EMAIL_PASSWORD=your-email-password`
+    `TO_EMAIL=recipient-email@example.com`
+    `SMTP_SERVER=smtp.your-email-provider.com`
+    `SMTP_PORT=587` 
     
     
 4.  **Prepare the `stocks.csv` file**: Create a `stocks.csv` file in the following format:
     
     
-    `stock,SL,TP1
-    AAPL,140,160
-    MSFT,250,280
-    GOOGL,2700,3000` 
+    `stock,SL,TP1`
+    `AAPL,140,160`
+    `MSFT,250,280`
+    `GOOGL,2700,3000` 
     
 
 -   **stock**: Stock ticker symbol (e.g., AAPL for Apple, MSFT for Microsoft).
