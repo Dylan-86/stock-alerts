@@ -15,18 +15,25 @@
     
     
     `EMAIL_ADDRESS=your-email@example.com`
+    
     `EMAIL_PASSWORD=your-email-password`
+    
     `TO_EMAIL=recipient-email@example.com`
+    
     `SMTP_SERVER=smtp.your-email-provider.com`
+    
     `SMTP_PORT=587` 
     
     
-4.  **Prepare the `stocks.csv` file**: Create a `stocks.csv` file in the following format:
+5.  **Prepare the `stocks.csv` file**: Create a `stocks.csv` file in the following format:
     
     
     `stock,SL,TP1`
+    
     `AAPL,140,160`
+    
     `MSFT,250,280`
+    
     `GOOGL,2700,3000` 
     
 
