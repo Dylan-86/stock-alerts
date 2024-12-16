@@ -41,7 +41,7 @@ def get_stock_price(ticker, retries=4, delay=1):
         print(f"Attempt {attempt + 1} failed for {ticker}. Retrying...")
         time.sleep(delay)
     print(f"{ticker}: No data found after {retries} attempts.")
-    return None
+    return 0
 
 # Function to get P/E ratio
 def get_pe_ratio(ticker):
