@@ -54,13 +54,14 @@ def get_pe_ratio(ticker):
         return "N/A"
 
 # Function to send email
-def send_email(subject, body):
+def send_email(subject, body_html):
     msg = MIMEMultipart()
     msg['From'] = EMAIL_ADDRESS
     msg['To'] = TO_EMAIL
     msg['Subject'] = subject
 
-    msg.attach(MIMEText(body, 'plain'))
+    # Attach HTML body
+    msg.attach(MIMEText(body_html, 'html'))
 
     try:
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
@@ -84,7 +85,7 @@ def load_stocks_from_csv(csv_file):
             "low": row['SL'],
             "high": row['TP1']
         }
-        print(stock)  # Debugging print
+        #print(stock)  # Debugging print
         stocks.append(stock)
 
     return stocks
@@ -110,13 +111,15 @@ def is_market_open():
     else:
         return False
 
-# Function to check the stock prices
+
+
+
 def check_stocks(stocks_to_monitor):
     if not is_market_open():
         print("Market is closed. Skipping stock check.")
         return  # Exit the function if the market is closed
 
-    alerts = []  # List to store alerts
+    data = []  # List to store table rows
 
     for stock in stocks_to_monitor:
         ticker = stock['ticker']
@@ -124,31 +127,67 @@ def check_stocks(stocks_to_monitor):
         high = stock['high']
         current_price = round(get_stock_price(ticker), 2)
         pe_ratio = round(get_pe_ratio(ticker), 2) if get_pe_ratio(ticker) != "N/A" else "N/A"
-
         print(f"Current price of {ticker}: {current_price}, P/E Ratio: {pe_ratio}")
 
+        # Determine status
         if current_price < low:
-            alert = f"😑 - {ticker} price below {low}. Current price: {current_price}. P/E Ratio: {pe_ratio}"
-            print(alert)
-            alerts.append(alert)
+            status = f"<span style='color: red;'>⬇️ Below SL ({low})</span>"
+            data.append([ticker, current_price, status, pe_ratio])  # Only add stocks below SL
         elif current_price > high:
-            alert = f"✅ - {ticker} price above {high}. Current price: {current_price}. P/E Ratio: {pe_ratio}"
-            print(alert)
-            alerts.append(alert)
-        else:
-            print(f"{ticker} is within the range {low}-{high}.")
+            status = f"<span style='color: green;'>⬆️ Above TP ({high})</span>"
+            data.append([ticker, current_price, status, pe_ratio])  # Only add stocks above TP
 
-    # Send a single email if there are any alerts
-    if alerts:
-        subject = "Stock Price Alerts"
-        body = "\n\n".join(alerts)
-        print("Sending email with the following alerts:")
-        print(body)
-        send_email(subject, body)
+    # If no alerts, do not send an email
+    if not data:
+        print("No alerts to send.")
+        return
+
+    # Generate an HTML table
+    table_html = """
+    <html>
+    <head>
+        <style>
+            table {border-collapse: collapse; width: 100%; font-family: Arial, sans-serif;}
+            th, td {border: 1px solid black; padding: 8px; text-align: center;}
+            th {background-color: #f2f2f2;}
+        </style>
+    </head>
+    <body>
+        <h2>📈 Stock Price Alerts</h2>
+        <table>
+            <tr>
+                <th>Ticker</th>
+                <th>Current Price</th>
+                <th>Status</th>
+                <th>Current P/E</th>
+            </tr>
+    """
+
+    for row in data:
+        table_html += f"""
+            <tr>
+                <td>{row[0]}</td>
+                <td>{row[1]}</td>
+                <td>{row[2]}</td>
+                <td>{row[3]}</td>
+            </tr>
+        """
+
+    table_html += """
+        </table>
+    </body>
+    </html>
+    """
+
+    print("Sending email with the alerts:")
+    print(data)
+    send_email("Stock Price Alerts", table_html)
+
+
 
 # Load stocks to monitor from CSV
 stocks_to_monitor = load_stocks_from_csv('stocks.csv')
-#%%
+
 # Run the check_stocks function as a one-time thing
 check_stocks(stocks_to_monitor)
 
