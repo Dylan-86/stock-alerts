@@ -80,13 +80,15 @@ def load_stocks_from_csv(csv_file):
 
     for index, row in df.iterrows():
         stock = {
-            "ticker": row['symbol'],
+            "ticker": str(row['symbol']).replace(".", "-"),  # Ensure "." is replaced with "-"
             "low": row['SL'],
             "high": row['TP1']
         }
+        print(stock)  # Debugging print
         stocks.append(stock)
 
     return stocks
+
 
 # Function to check if the market is open
 def is_market_open():
@@ -146,7 +148,7 @@ def check_stocks(stocks_to_monitor):
 
 # Load stocks to monitor from CSV
 stocks_to_monitor = load_stocks_from_csv('stocks.csv')
-
+#%%
 # Run the check_stocks function as a one-time thing
 check_stocks(stocks_to_monitor)
 
