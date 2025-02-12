@@ -18,7 +18,7 @@ load_dotenv()  # load .env
 # Sort the CSV alphabetically - Specify the input and output CSV files and the column to sort
 input_file = 'stocks.csv'
 output_file = 'stocks.csv'
-sort_column = 'stock'
+sort_column = 'symbol'
 
 # Call the sort_csv function
 sortalphabetical.sort_csv(input_file, output_file, sort_column)
