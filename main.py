@@ -80,7 +80,7 @@ def load_stocks_from_csv(csv_file):
 
     for index, row in df.iterrows():
         stock = {
-            "ticker": row['stock'],
+            "ticker": row['symbol'],
             "low": row['SL'],
             "high": row['TP1']
         }
